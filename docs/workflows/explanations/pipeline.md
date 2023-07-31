@@ -211,6 +211,6 @@ A typical use case are file name patterns, derivative from a variable value, lik
 
 Writing a valid pipeline can be tedious task. Pipelines are a chain of streams, and those streams have to match.
 
-To learn more about correctly matching those streams, go [here](pipeline-validation.md).
+To learn more about correctly matching those streams, go [here](pipeline-validity.md).
 
 To automatically detect stream-matching errors, use [pipeline validator](https://github.com/zazuko/barnard59-pipeline-validation).

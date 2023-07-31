@@ -8,7 +8,7 @@ Culture-wise it is similar to the [DevOps](https://en.m.wikipedia.org/wiki/DevOp
 
 Like code, we maintain the pipeline within a version control system like Git. This makes it easy to try out things by working in branches & you will get a full history of what you do in case you break something at one point. We usually do that in public GitHub repositories or from private data in private GitLab instances of our customers. So before you go any further, do a `git init` and add whatever you did so far.
 
-To be able to automate something we typically start working on our workstation. We continue the work we did in the [Primer](Primer). Running the pipeline locally is a good start as it facilitates developing and debugging in case something goes wrong. If you have a really large dataset it usually makes sense to work on a smaller version of the data, this makes it easier to verify and extend the mapping as you go.
+To be able to automate something we typically start working on our workstation. We continue the work we did in the [Primer](../tutorial/first-pipeline.mdx). Running the pipeline locally is a good start as it facilitates developing and debugging in case something goes wrong. If you have a really large dataset it usually makes sense to work on a smaller version of the data, this makes it easier to verify and extend the mapping as you go.
 
 Most likely you will read the source data from a local directory on your workstation so we do not have an overhead of downloading the data from an external source each time we run the pipeline. You can do that by adding steps that reads from the local filesystem and write the result to a file.
 
