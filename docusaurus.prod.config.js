@@ -1,6 +1,6 @@
-import * as baseConfig from './docusaurus.config.js'
+const baseConfig = require('./docusaurus.config.js')
 
-export const config = {
+module.exports = {
   ...baseConfig,
   baseUrl: '/data-centric.zazuko.com/'
 }
