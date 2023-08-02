@@ -14,7 +14,7 @@ const config = {
   url: 'https://data-centric.zazuko.com',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: process.env.NODE_ENV === 'development' ? '/' : '/data-centric.zazuko.com/',
+  baseUrl: '/',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
