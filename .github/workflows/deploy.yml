@@ -22,3 +22,4 @@ jobs:
           email: noreply@zazuko.com
           build_dir: build
           jekyll: no
+          cname: data-centric.zazuko.com
