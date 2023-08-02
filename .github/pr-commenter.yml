@@ -4,4 +4,4 @@ comment:
     - id: preview-url
       files:
         - 'docs/**/*'
-      body: "Netlify preview deployed to {{ url }}"
+      body: "Netlify preview deployed to [{{ url }}]({{ url }})"
