@@ -34,14 +34,14 @@ This loader may not be suitable for loading large files because they are synchro
 <step>
     code:arguments
         (
-            "/full/path/myKeyFile.key"^^p:FileContent
+            "/full/path/myKeyFile.key"^^p:FileContents
         )
 .
 ```
 
 ### Path in variable
 
-The `p:FileContent` literal can also be the name of a variable.
+The `p:FileContents` literal can also be the name of a variable.
 
 ```turtle
 @prefix code: <https://code.described.at/> .
@@ -56,7 +56,7 @@ The `p:FileContent` literal can also be the name of a variable.
 <step>
     code:arguments
         (
-            "KEY_PATH"^^p:FileContent
+            "KEY_PATH"^^p:FileContents
         )
 .
 ```
@@ -79,7 +79,7 @@ For convenience, bash-style paths stating with `~` are also supported.
     code:arguments
         [
             code:name "privateKey" ;
-            code:value "~/.ssh/id_ed25519"^^p:FileContent ;
+            code:value "~/.ssh/id_ed25519"^^p:FileContents ;
         ] ;
 .
 ```
