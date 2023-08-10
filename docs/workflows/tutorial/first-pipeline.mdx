@@ -1,5 +1,8 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+import { selectLines } from '@site/src/lines.js'
+import pipeline from '!!raw-loader!./first-pipeline.ttl'
 
 # Getting started
 
@@ -37,7 +40,7 @@ Add `type: module` to the package.json to use ESM Modules
 
 ```diff
 {
-  "name": "b59",
+  "name": "barnard59-time-zone",
   "version": "1.0.0",
 + "type": "module",
   "description": "",
@@ -74,32 +77,15 @@ CLI then parses this file and executes the processing.
 
 First, add the necessary prefixes and a base URI.
 
-```turtle title="pipeline/main.ttl"
-@base <http://example.org/pipeline/> .
-@prefix code: <https://code.described.at/> .
-@prefix p: <https://pipeline.described.at/> .
-```
+<CodeBlock language="turtle" title="pipeline/main.ttl">
+  {selectLines(pipeline, { to: 3 })}
+</CodeBlock>
 
 Then add the pipeline resource itself.
 
-```turtle title="pipeline/main.ttl"
-<> a p:Pipeline, p:Readable ;
-  p:variables [
-    p:variable [
-      a p:Variable;
-      p:name "apiBase" ;
-      p:value "https://timeapi.io/api/Time/current/zone?timeZone=" ;
-    ] ;
-    p:variable [
-      a p:Variable;
-      p:name "TZ" ;
-      p:value "UTC" ;
-    ]
-  ] ;
-  p:steps [
-    p:stepList ( <fetch> <parseJson> <jsonldStructure> <parse> <serialize> )
-  ] .
-```
+<CodeBlock language="turtle" title="pipeline/main.ttl">
+  {selectLines(pipeline, { from: 5, to: 24 })}
+</CodeBlock>
 
 Here, you started a [`Readable`](/docs/workflows/explanations/pipeline) pipeline with 5 steps and a variable which
 will be needed by those steps and is the means to parametrise a pipeline.
@@ -108,17 +94,9 @@ will be needed by those steps and is the means to parametrise a pipeline.
 
 Next, add implementation of `<fetch>` step to retrieve the current time using a simple HTTP request.
 
-```turtle title="pipeline/main.ttl"
-<fetch> a p:Step ;
-  code:implementedBy [
-    a code:EcmaScriptModule;
-    code:link <node:barnard59-http#get> ;
-  ];
-  code:arguments [
-    code:name "url";
-    code:value "https://timeapi.io/api/Time/current/zone?timeZone=${TZ}"^^code:EcmaScriptTemplateLiteral ;
-  ].
-```
+<CodeBlock language="turtle" title="pipeline/main.ttl">
+  {selectLines(pipeline, { from: 26, to: 36 })}
+</CodeBlock>
 
 ### Parse time as JSON-LD
 
@@ -145,13 +123,9 @@ The `timeapi.io` returns a plain JSON response which represents a point in time.
 This JSON will be pushed as a single string [chunk](https://nodesource.com/blog/understanding-streams-in-nodejs/).
 To convert it to RDF, first parse the JSON itself by using an operation from `barnard59-base`:
 
-```turtle title="pipeline/main.ttl"
-<parseJson> a p:Step ;
-  code:implementedBy [
-    a code:EcmaScriptModule;
-    code:link <node:barnard59-base/json.js#parse> ;
-  ].
-```
+<CodeBlock language="turtle" title="pipeline/main.ttl">
+  {selectLines(pipeline, { from: 38, to: 43 })}
+</CodeBlock>
 
 :::info
 [`barnard59-base`](https://github.com/zazuko/barnard59/blob/master/packages/base/manifest.ttl) contains many steps which
@@ -161,22 +135,9 @@ will be useful in stream processing, such as filtering chunks, merging multiple 
 Next, you'll want to apply a JSON-LD context to extract the `dateTime` from the JSON and have it parsed as an
 `xsd:dateTime` literal.
 
-```turtle title="pipeline/main.ttl"
-<jsonldStructure>
-  a p:Step ;
-  code:implementedBy [
-    a code:EcmaScriptModule;
-    // highlight-next-line
-    code:link <node:barnard59-base/map.js#default> ;
-  ];
-  code:arguments (
-    [
-      a code:EcmaScriptModule ;
-      // highlight-next-line
-      code:link <file:lib/jsonldStructure.js#addContext>
-    ]
-  ).
-```
+<CodeBlock language="turtle" title="pipeline/main.ttl">
+  {selectLines(pipeline, { from: 45, to: 60 })}
+</CodeBlock>
 
 When processing a stream, a chunk can be modified by mapping to a new value. Here, the argument to the `map.js` module
 is a function which should return JSON-LD. As seen in the previous snippet, the implementation is `addContext` function
@@ -199,13 +160,9 @@ export function addContext(json) {
 
 Finally, the parsing itself is a dedicated operation provided by the package `barnard59-formats`:
 
-```turtle title="pipeline/main.ttl"
-<parse> a p:Step ;
-  code:implementedBy [
-    a code:EcmaScriptModule;
-    code:link <node:barnard59-formats/jsonld.js#parse.object> ;
-  ].
-```
+<CodeBlock language="turtle" title="pipeline/main.ttl">
+  {selectLines(pipeline, { from: 62, num: 5 })}
+</CodeBlock>
 
 :::caution
 Notice the `#parse.object` export used to parse JSON-LD which is used with object chunks. When processing a raw, string
@@ -216,14 +173,9 @@ JSON-LD stream `#parse` would be used instead.
 
 Finally, to serialize an RDF stream, simply add the last, simple step.
 
-```turtle
-<serialize>
-  a p:Step ;
-  code:implementedBy [
-    a code:EcmaScriptModule ;
-    code:link <node:barnard59-formats/ntriples.js#serialize> ;
-  ] .
-```
+<CodeBlock language="turtle" title="pipeline/main.ttl">
+  {selectLines(pipeline, { from: 69, num: 6 })}
+</CodeBlock>
 
 ## Running the pipeline
 
