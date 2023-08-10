@@ -1,0 +1,67 @@
+import CodeBlock from '@theme/CodeBlock';
+import { selectLines } from '@site/src/lines.js'
+import pipeline from '!!raw-loader!../tutorial/first-pipeline.ttl'
+
+# Extend barnard59 CLI
+
+To create additional CLI commands for the [`barnard59` CLI](../reference/cli) you will need to first create and publish
+a package whose name starts with `barnard59-`. If you have not, follow the [tutorial](../tutorial/first-pipeline). The
+rest of this how-to will use that `barnard59-time-zone` as the example.
+
+When you complete this how-to, you will be able to run a new `barnard59 time-zone fetch` command.
+
+## Create manifest entry
+
+If necessary, create and open a `manifest.ttl` in the package root. In it, add the following triples:
+
+```turtle
+@base <https://barnard59.zazuko.com/> .
+@prefix b59: <https://barnard59.zazuko.com/vocab#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<command/time-zone/fetch>
+    a b59:CliCommand ;
+    b59:command "fetch" ;
+    rdfs:label "Gets current time in the specific time zone" ;
+    b59:source "barnard59-time-zone/pipeline/main.ttl" ;
+.
+```
+
+The `b59:CliCommand` type, and `b59:command` and `b59:source` properties are required.
+
+`b59:source` must be a node identifier matching the package name and path.
+
+The identifier of the CLI Command resource is not that important, but it should be guaranteed to be unique and basing it in the `https://barnard59.zazuko.com/command` is current best practice which may be used in the future for dereferencing manifest descriptions.
+
+Label is optional.
+
+## Selecting pipeline identifier
+
+In case when the pipeline definition contains sub-pipelines, the manifest will need to also include the exact identifier,
+similarly how the `--pipeline` [CLI](../reference/cli#--pipeline) flag is required.
+
+```turtle
+@prefix b59: <https://barnard59.zazuko.com/vocab#> .
+
+<command/time-zone/fetch>
+// highlight-next-line
+    b59:pipeline <http://example.org/pipeline/tz> ;
+.
+```
+
+## Mapping variables to CLI options
+
+Root pipeline variables will be mapped to CLI options. All options are required unless they have `p:required false` or
+`p:value`
+
+The pipeline `http://example.org/pipeline/tz` has two variables:
+
+<CodeBlock language="turtle" title="pipeline/main.ttl">
+  {selectLines(pipeline, { from: 6, to: 20 })}
+</CodeBlock>
+
+The will be mapped to optional CLI options:
+
+```shell
+barnard59 time-zone fetch --apiBase http://example.com/time --TZ Europe/Amsterdam
+```
