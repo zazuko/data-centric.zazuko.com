@@ -54,6 +54,11 @@ const config = {
     ({
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
+      algolia: {
+        appId: '4EOKWGCTX1',
+        apiKey: '3a4dc4403e4ed8dbaf51b8d0ecae1ad4',
+        indexName: 'data-centric-zazuko',
+      },
       navbar: {
         title: 'Data-Centric',
         logo: {
