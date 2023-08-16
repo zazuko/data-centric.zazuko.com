@@ -4,4 +4,5 @@ comment:
     - id: preview-url
       files:
         - 'docs/**/*'
+        - docusaurus.config.js
       body: "Netlify preview deployed to [{{ url }}]({{ url }})"
