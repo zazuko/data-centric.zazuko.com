@@ -6,7 +6,7 @@ the resulting data with its origin in the source files (table + row number).
 This greatly increases the total output by adding 4 triples for every CSV row, and it's unnecessary
 in many scenarios.
 
-To easily remove these triples, as of version `1.1.0` the `barnard59-csvw` package exports a simple
+To easily remove these triples, as of version `1.0.1` the `barnard59-csvw` package exports a simple
 filter function which can be used with `barnard59-base/filter.js`:
 
 ```turtle
