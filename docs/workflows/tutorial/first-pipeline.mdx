@@ -78,13 +78,13 @@ CLI then parses this file and executes the processing.
 First, add the necessary prefixes and a base URI.
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { to: 3 })}
+  {selectLines(pipeline, { to: 4 })}
 </CodeBlock>
 
 Then add the pipeline resource itself.
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 5, to: 18 })}
+  {selectLines(pipeline, { from: 6, to: 25 })}
 </CodeBlock>
 
 Here, you started a [`Readable`](/docs/workflows/explanations/pipeline) pipeline with 5 steps and a variable which
@@ -95,7 +95,7 @@ will be needed by those steps and is the means to parametrise a pipeline.
 Next, add implementation of `<fetch>` step to retrieve the current time using a simple HTTP request.
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 20, to: 30 })}
+  {selectLines(pipeline, { from: 27, to: 31 })}
 </CodeBlock>
 
 ### Parse time as JSON-LD
@@ -124,7 +124,7 @@ This JSON will be pushed as a single string [chunk](https://nodesource.com/blog/
 To convert it to RDF, first parse the JSON itself by using an operation from `barnard59-base`:
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 32, to: 37 })}
+  {selectLines(pipeline, { from: 20, to: 20 })}
 </CodeBlock>
 
 :::info
@@ -133,15 +133,15 @@ will be useful in stream processing, such as filtering chunks, merging multiple 
 :::
 
 Next, you'll want to apply a JSON-LD context to extract the `dateTime` from the JSON and have it parsed as an
-`xsd:dateTime` literal.
+`xsd:dateTime` literal. Hence, add the implementation for step `<jsonldStructure>`:
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 39, to: 54 })}
+  {selectLines(pipeline, { from: 33, to: 38 })}
 </CodeBlock>
 
-When processing a stream, a chunk can be modified by mapping to a new value. Here, the argument to the `map.js` module
+When processing a stream, a chunk can be modified by mapping to a new value. Here, the argument to the `op:base\/map` operation
 is a function which should return JSON-LD. As seen in the previous snippet, the implementation is `addContext` function
-exported from a module `lib/jsonldStructure.js`
+exported from a module `jsonldStructure.js`
 
 ```js title="lib/jsonldStructure.js"
 export function addContext(json) {
@@ -160,20 +160,20 @@ export function addContext(json) {
 Finally, the parsing itself is a dedicated operation provided by the package `barnard59-formats`:
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 56, num: 5 })}
+  {selectLines(pipeline, { from: 22, to:22 })}
 </CodeBlock>
 
 :::caution
-Notice the `#parse.object` export used to parse JSON-LD which is used with object chunks. When processing a raw, string
-JSON-LD stream `#parse` would be used instead.
+Notice the final `parse/object` segments used to parse JSON-LD which is used with object chunks. When processing a raw, string
+JSON-LD stream `parse` would be used instead.
 :::
 
 ### Serialize
 
-Finally, to serialize an RDF stream, simply add the last, simple step.
+Finally, the last step is to serialize an RDF stream.
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 63, num: 6 })}
+  {selectLines(pipeline, { from: 23, to: 23 })}
 </CodeBlock>
 
 ## Running the pipeline
@@ -184,7 +184,7 @@ You are now ready to run the pipeline:
 npx barnard59 run pipeline/main.ttl --pipeline http://example.org/pipeline/tz
 ```
 
-The CLI `run` action is called the path of the pipeline's source and its identifier.
+The CLI `run` action is called with the path of the pipeline's source and its identifier.
 
 In the output, you should see a single triple
 
