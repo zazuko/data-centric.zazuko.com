@@ -84,7 +84,7 @@ First, add the necessary prefixes and a base URI.
 Then add the pipeline resource itself.
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 5, to: 24 })}
+  {selectLines(pipeline, { from: 5, to: 18 })}
 </CodeBlock>
 
 Here, you started a [`Readable`](/docs/workflows/explanations/pipeline) pipeline with 5 steps and a variable which
@@ -95,7 +95,7 @@ will be needed by those steps and is the means to parametrise a pipeline.
 Next, add implementation of `<fetch>` step to retrieve the current time using a simple HTTP request.
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 26, to: 36 })}
+  {selectLines(pipeline, { from: 20, to: 30 })}
 </CodeBlock>
 
 ### Parse time as JSON-LD
@@ -124,7 +124,7 @@ This JSON will be pushed as a single string [chunk](https://nodesource.com/blog/
 To convert it to RDF, first parse the JSON itself by using an operation from `barnard59-base`:
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 38, to: 43 })}
+  {selectLines(pipeline, { from: 32, to: 37 })}
 </CodeBlock>
 
 :::info
@@ -136,7 +136,7 @@ Next, you'll want to apply a JSON-LD context to extract the `dateTime` from the 
 `xsd:dateTime` literal.
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 45, to: 60 })}
+  {selectLines(pipeline, { from: 39, to: 54 })}
 </CodeBlock>
 
 When processing a stream, a chunk can be modified by mapping to a new value. Here, the argument to the `map.js` module
@@ -145,14 +145,13 @@ exported from a module `lib/jsonldStructure.js`
 
 ```js title="lib/jsonldStructure.js"
 export function addContext(json) {
-    const apiBase = this.variables.get('apiBase')
     const TZ = this.variables.get('TZ')
 
     return {
         '@context': {
             dateTime: 'http://purl.org/dc/elements/1.1/date'
         },
-        '@id': `${apiBase}${TZ}`,
+        '@id': `https://timeapi.io/api/Time/current/zone?timeZone=${TZ}`,
         ...json
     }
 }
@@ -161,7 +160,7 @@ export function addContext(json) {
 Finally, the parsing itself is a dedicated operation provided by the package `barnard59-formats`:
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 62, num: 5 })}
+  {selectLines(pipeline, { from: 56, num: 5 })}
 </CodeBlock>
 
 :::caution
@@ -174,7 +173,7 @@ JSON-LD stream `#parse` would be used instead.
 Finally, to serialize an RDF stream, simply add the last, simple step.
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 69, num: 6 })}
+  {selectLines(pipeline, { from: 63, num: 6 })}
 </CodeBlock>
 
 ## Running the pipeline

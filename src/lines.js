@@ -1,5 +1,5 @@
 export function selectLines(str, { from = 1, to, num } = {}) {
-  const fromChar = str.split('\n', from - 1).join('\n').length + 1
+  const fromChar = str.split('\n', from - 1).join('\n').length
   let toChar
 
   if (to) {
@@ -8,5 +8,5 @@ export function selectLines(str, { from = 1, to, num } = {}) {
     toChar = str.split('\n', from + num).join('\n').length
   }
 
-  return str.substring(fromChar, toChar)
+  return str.substring(fromChar, toChar).trim()
 }

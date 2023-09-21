@@ -1,16 +1,10 @@
- @base <http://example.org/pipeline/> .
+@base <http://example.org/pipeline/> .
 @prefix code: <https://code.described.at/> .
 @prefix p: <https://pipeline.described.at/> .
 
 <tz> a p:Pipeline, p:Readable ;
   p:variables
     [
-      p:variable
-        [
-          a p:Variable ;
-          p:name "apiBase" ;
-          p:value "https://timeapi.io/api/Time/current/zone?timeZone=" ;
-        ] ;
       p:variable
         [
           a p:Variable ;
