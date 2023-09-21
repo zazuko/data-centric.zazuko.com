@@ -1,4 +1,4 @@
-@base <http://example.org/pipeline/> .
+ @base <http://example.org/pipeline/> .
 @prefix code: <https://code.described.at/> .
 @prefix p: <https://pipeline.described.at/> .
 
@@ -55,7 +55,7 @@
       [
         a code:EcmaScriptModule ;
       # highlight-next-line
-        code:link <file:lib/jsonldStructure.js#addContext>
+        code:link <file:../lib/jsonldStructure.js#addContext>
       ]
     ) .
 

@@ -182,7 +182,7 @@ Finally, to serialize an RDF stream, simply add the last, simple step.
 You are now ready to run the pipeline:
 
 ```
-npx barnard59 run pipeline/main.ttl --pipeline http://example.org/pipeline/
+npx barnard59 run pipeline/main.ttl --pipeline http://example.org/pipeline/tz
 ```
 
 The CLI `run` action is called the path of the pipeline's source and its identifier.
@@ -202,7 +202,7 @@ command line.
 
 ```
 npx barnard59 run pipeline/main.ttl \
-  --pipeline http://example.org/pipeline/ \
+  --pipeline http://example.org/pipeline/tz \
   --variable TZ=America/New_York
 ```
 
