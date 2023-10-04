@@ -1,16 +1,11 @@
 @base <http://example.org/pipeline/> .
 @prefix code: <https://code.described.at/> .
 @prefix p: <https://pipeline.described.at/> .
+@prefix op: <http://barnard59.zazuko.com/operations/> .
 
 <tz> a p:Pipeline, p:Readable ;
   p:variables
     [
-      p:variable
-        [
-          a p:Variable ;
-          p:name "apiBase" ;
-          p:value "https://timeapi.io/api/Time/current/zone?timeZone=" ;
-        ] ;
       p:variable
         [
           a p:Variable ;
@@ -20,56 +15,24 @@
     ] ;
   p:steps
     [
-      p:stepList ( <fetch> <parseJson> <jsonldStructure> <parse> <serialize> )
+      p:stepList (
+        <fetch>
+        [ op:base\/json\/parse () ]
+        <jsonldStructure>
+        [ op:formats\/jsonld\/parse\/object () ]
+        [ op:formats\/ntriples\/serialize () ]
+      )
     ] .
 
-<fetch> a p:Step ;
-  code:implementedBy
-    [
-      a code:EcmaScriptModule ;
-      code:link <node:barnard59-http#get> ;
-    ] ;
-  code:arguments
-    [
-      code:name "url" ;
-      code:value "https://timeapi.io/api/Time/current/zone?timeZone=${TZ}"^^code:EcmaScriptTemplateLiteral ;
-    ] .
+<fetch> op:http\/get
+  [
+    code:name "url" ;
+    code:value "https://timeapi.io/api/Time/current/zone?timeZone=${TZ}"^^code:EcmaScriptTemplateLiteral ;
+  ] .
 
-<parseJson> a p:Step ;
-  code:implementedBy
-    [
-      a code:EcmaScriptModule ;
-      code:link <node:barnard59-base/json.js#parse> ;
-    ] .
-
-<jsonldStructure>
-  a p:Step ;
-  code:implementedBy
-    [
-      a code:EcmaScriptModule ;
-    # highlight-next-line
-      code:link <node:barnard59-base/map.js#default> ;
-    ] ;
-  code:arguments
-    (
-      [
-        a code:EcmaScriptModule ;
-      # highlight-next-line
-        code:link <file:lib/jsonldStructure.js#addContext>
-      ]
-    ) .
-
-<parse> a p:Step ;
-  code:implementedBy
-    [
-      a code:EcmaScriptModule ;
-      code:link <node:barnard59-formats/jsonld.js#parse.object> ;
-    ] .
-
-<serialize>
-  a p:Step ;
-  code:implementedBy
-    [
-      a code:EcmaScriptModule ;
-      code:link <node:barnard59-formats/ntriples.js#serialize> ;
-    ] .
+<jsonldStructure> op:base\/map (
+  [
+    a code:EcmaScriptModule ;
+    code:link <file:../lib/jsonldStructure.js#addContext>
+  ]
+) .

@@ -54,14 +54,14 @@ similarly how the `--pipeline` [CLI](../reference/cli#--pipeline) flag is requir
 Root pipeline variables will be mapped to CLI options. All options are required unless they have `p:required false` or
 `p:value`
 
-The pipeline `http://example.org/pipeline/tz` has two variables:
+The pipeline `http://example.org/pipeline/tz` has one variable:
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 6, to: 20 })}
+  {selectLines(pipeline, { from: 6, to: 15 })}
 </CodeBlock>
 
-The will be mapped to optional CLI options:
+It will be mapped to an optional CLI option:
 
 ```shell
-barnard59 time-zone fetch --apiBase http://example.com/time --TZ Europe/Amsterdam
+barnard59 time-zone fetch --TZ Europe/Amsterdam
 ```

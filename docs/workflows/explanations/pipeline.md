@@ -66,7 +66,7 @@ This is useful if pipelines share the same steps, but have different variables.
 
 The step itself must have a `rdf:type` of `p:Step`.
 The Code Ontology is used to point to the actual code.
-This is done with the `code:implementedBy` property and code description with the `rdf:type` of `code:EcmaScript`.
+This is done with the `code:implementedBy` property and code description with the `rdf:type` of `code:EcmaScriptModule`.
 The `code:link` points to the JavaScript code file.
 `node:` IRIs can be used to use the Node.js resolve logic of `require` to find files and packages.
 `file:` IRIs will be expanded to full paths.
@@ -75,7 +75,7 @@ This example uses the Node.js file system function to create a readable stream.
 
 ```turtle
 <#readFile> a p:Step ;
-  code:implementedBy [ a code:EcmaScript ;
+  code:implementedBy [ a code:EcmaScriptModule ;
     code:link <node:fs#createReadStream>
   ] ;
   code:arguments ( "input.txt" ) .
@@ -85,7 +85,7 @@ It's also possible to give the arguments as key value pairs like this:
 
 ```turtle
 <#parseCsvw> a p:Step ;
-  code:implementedBy [ a code:EcmaScript ;
+  code:implementedBy [ a code:EcmaScriptModule ;
     code:link <file:customStreamCode.js>
   ] ;
   code:arguments [
@@ -107,6 +107,8 @@ The built argument for this example would look like this:
   method: 'POST'
 }
 ```
+
+**Note:** Step definitions using common operations may take advantage of [simplified syntax](./simplified-syntax).
 
 ### Variables
 
@@ -135,7 +137,7 @@ In the example below, the argument will be replaced with the value of the variab
 
 ```turtle
 <#readFile> a p:Step;
-  code:implementedBy [ a code:EcmaScript ;
+  code:implementedBy [ a code:EcmaScriptModule ;
     code:link <node:fs#createReadStream>
   ] ;
   code:arguments ("filename"^^p:VariableName) .
@@ -148,7 +150,7 @@ The variable values are injected with their corresponding name, like shown in th
 
 ```turtle
 <#readFile> a p:Step ;
-  code:implementedBy [ a code:EcmaScript ;
+  code:implementedBy [ a code:EcmaScriptModule ;
     code:link <node:fs#createReadStream>
   ] ;
   code:arguments ( "${basePath}/input.txt"^^code:EcmaScriptTemplateLiteral ) .
@@ -163,7 +165,7 @@ In the following example you can see how the variable `prefix` can be accessed i
 
 ```turtle
 <#map> a p:Step ;
-  code:implementedBy [ a code:EcmaScript ;
+  code:implementedBy [ a code:EcmaScriptModule ;
     code:link <node:barnard59-base#map>
   ] ;
   code:arguments ("""row => {
@@ -184,7 +186,7 @@ Here is a small example for a step which is using the `barnard59-base#map` opera
 
 ```turtle
 <#map> a p:Step ;
-  code:implementedBy [ a code:EcmaScript ;
+  code:implementedBy [ a code:EcmaScriptModule ;
     code:link <node:barnard59-base#map>
   ] ;
   code:arguments ("""row => {
@@ -201,7 +203,7 @@ A typical use case are file name patterns, derivative from a variable value, lik
 
 ```turtle
 <#readFile> a p:Step ;
-  code:implementedBy [ a code:EcmaScript ;
+  code:implementedBy [ a code:EcmaScriptModule ;
     code:link <node:fs#createReadStream>
   ] ;
   code:arguments ( "${basePath}/input.txt"^^code:EcmaScriptTemplateLiteral ) .
