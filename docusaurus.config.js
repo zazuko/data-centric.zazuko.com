@@ -107,7 +107,7 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'RDF Commnity Discussions',
+                label: 'RDF Commnuty Discussions',
                 href: 'https://github.com/rdf-community/discussions/discussions',
               },
               {
