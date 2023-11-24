@@ -1,7 +1,7 @@
 @base <http://example.org/pipeline/> .
 @prefix code: <https://code.described.at/> .
 @prefix p: <https://pipeline.described.at/> .
-@prefix op: <http://barnard59.zazuko.com/operations/> .
+@prefix op: <https://barnard59.zazuko.com/operations/> .
 
 <tz> a p:Pipeline, p:Readable ;
   p:variables
