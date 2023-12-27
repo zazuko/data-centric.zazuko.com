@@ -59,7 +59,7 @@ Hence, we can inline the call to such a well-known operation:
 
 As you can see, an step declared in simplified syntax is a node with a single predicate which is the operation's identifier. 
 Arguments are passed as usual. As a list, if the operation uses positional parameters, or key/value pairs, if the operation has named parameters.
-See [this page](./pipeline) for more details.
+See [this page](../pipeline) for more details.
 
 Other examples of simplified syntax are in the [getting started](../tutorial/first-pipeline) tutorial.
 
