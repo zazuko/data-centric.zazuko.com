@@ -46,16 +46,20 @@ The `barnard59-core` package already defines the `createReadStream` operation in
 Hence, we can inline the call to such a well-known operation:
 
 ```turtle
-@base <http://barnard59.zazuko.com/operations/core/> .
+@prefix fs: <http://barnard59.zazuko.com/operations/core/fs/> .
 
 <#pipeline> a p:Pipeline ;
   p:steps [
     p:stepList ( 
-      [ <fs/createReadStream> ( "input.txt" ) ]
+      [ fs:createReadStream ( "input.txt" ) ]
       <#doSomethingElse> 
     )
   ] .
 ```
+
+As you can see, an step declared in simplified syntax is a node with a single predicate which is the operation's identifier. 
+Arguments are passed as usual. As a list, if the operation uses positional parameters, or key/value pairs, if the operation has named parameters.
+See [this page](./pipeline) for more details.
 
 Other examples of simplified syntax are in the [getting started](../tutorial/first-pipeline) tutorial.
 
