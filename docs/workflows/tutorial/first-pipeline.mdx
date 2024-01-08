@@ -84,7 +84,7 @@ First, add the necessary prefixes and a base URI.
 Then add the pipeline resource itself.
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 6, to: 25 })}
+  {selectLines(pipeline, { from: 6, num: 19 })}
 </CodeBlock>
 
 Here, you started a [`Readable`](/docs/workflows/explanations/pipeline) pipeline with 5 steps and a variable which
@@ -95,7 +95,7 @@ will be needed by those steps and is the means to parametrise a pipeline.
 Next, add implementation of `<fetch>` step to retrieve the current time using a simple HTTP request.
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 27, to: 31 })}
+  {selectLines(pipeline, { from: 27, num: 4 })}
 </CodeBlock>
 
 ### Parse time as JSON-LD
@@ -124,7 +124,7 @@ This JSON will be pushed as a single string [chunk](https://nodesource.com/blog/
 To convert it to RDF, first parse the JSON itself by using an operation from `barnard59-base`:
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 20, to: 20 })}
+  {selectLines(pipeline, { from: 20 })}
 </CodeBlock>
 
 :::info
@@ -136,7 +136,7 @@ Next, you'll want to apply a JSON-LD context to extract the `dateTime` from the 
 `xsd:dateTime` literal. Hence, add the implementation for step `<jsonldStructure>`:
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 33, to: 38 })}
+  {selectLines(pipeline, { from: 33, num: 5 })}
 </CodeBlock>
 
 When processing a stream, a chunk can be modified by mapping to a new value. Here, the argument to the `op:base\/map` operation
@@ -160,7 +160,7 @@ export function addContext(json) {
 Finally, the parsing itself is a dedicated operation provided by the package `barnard59-formats`:
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 22, to:22 })}
+  {selectLines(pipeline, { from: 22 })}
 </CodeBlock>
 
 :::caution
@@ -173,7 +173,7 @@ JSON-LD stream `parse` would be used instead.
 Finally, the last step is to serialize an RDF stream.
 
 <CodeBlock language="turtle" title="pipeline/main.ttl">
-  {selectLines(pipeline, { from: 23, to: 23 })}
+  {selectLines(pipeline, { from: 23 })}
 </CodeBlock>
 
 ## Running the pipeline
