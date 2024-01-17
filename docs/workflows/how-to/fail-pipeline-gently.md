@@ -45,7 +45,6 @@ For the example above, the implementation could be changed to break the loop and
 ```js
 export default function streamFailingRandomly() {
   return async function * (source) {
-    let error = null;
     let total = 0;
     
     for await (const chunk of source) {
