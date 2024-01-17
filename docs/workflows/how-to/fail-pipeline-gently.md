@@ -24,8 +24,8 @@ export default function streamFailingRandomly() {
 
 When the error is thrown, the pipeline will stop immediately. No further chunks will be processed and the code following
 the async loop will not be reached.
-It is quite clear from a generator-style operation implementation but can be a surprise when implementing steps using low
-level streams. In the latter case, the flush callback will also not be called.
+This is quite clear in generator-style implementations but can be a surprise when implementing steps using low-level streams. 
+In the latter case, the flush callback will not be called.
 
 What's more, an exception thrown in one step affects other steps in the pipeline, preventing their respective flush
 callbacks from being called.
