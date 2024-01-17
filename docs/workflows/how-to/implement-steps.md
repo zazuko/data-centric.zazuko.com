@@ -95,7 +95,7 @@ export default function step() {
 Note that there are some important differences between the through2 step and async generators:
 
 1. When using through2, it is not possible to capture a specific `before` stage. Any additional data must be pushed in the `flush` callback. 
-   - Alternatively, a library like [onetime](https://npm.im/onetime) can be used to create  `before` stage is only executed once.
+   - Alternatively, a library like [onetime](https://npm.im/onetime) can be used to create a `before` stage which is only executed once.
 2. The stream transform and flush functions are not bound to the context. This means that the context must be captured in a closure, or they must be implemented as arrow functions.
 
 :::caution
