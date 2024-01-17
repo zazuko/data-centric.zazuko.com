@@ -1,4 +1,4 @@
-# Fail pipeline without stopping it immediately
+# Fail pipeline gracefully
 
 The easiest way to stop a pipeline is to throw an exception. However, this will stop the pipeline immediately.
 Consider the simple step implementation below.
