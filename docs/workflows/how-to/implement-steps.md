@@ -24,13 +24,14 @@ import nanoid from 'nanoid'
  */
 export default function step() {
   // 1. prepare the step
+  const { env } = this
   const id = nanoid()
-  const ex = this.rdf.namespace('http://example.org/')
+  const ex = env.namespace('http://example.org/')
   
   return async function* (stream) {
     // 2. before first chunk
     let total = 0
-    yield this.rdf.quad(rdf.blankNode(id), rdf.ns.rdf.type, ex.StepSummary)
+    yield env.quad(env.blankNode(id), env.ns.rdf.type, ex.StepSummary)
     
     for await (const quad of stream) {
       // 3. push chunks down the pipeline
@@ -39,7 +40,7 @@ export default function step() {
     }
     
     // 4. after last chunk
-    yield this.rdf.quad(rdf.blankNode(id), ex.totalQuads, total)
+    yield env.quad(rdf.blankNode(id), ex.totalQuads, total)
   }.bind(this)
 }
 ```
@@ -70,11 +71,11 @@ import nanoid from 'nanoid'
  * @this {import('barnard59-core').Context}
  */
 export default function step() {
-  const { rdf } = this
+  const { env } = this
   
   // 1. prepare the step
   const id = nanoid()
-  const ex = rdf.namespace('http://example.org/')
+  const ex = env.namespace('http://example.org/')
   let total = 0
   
   return through2.obj(function (chunk, encoding, callback) {
@@ -84,8 +85,8 @@ export default function step() {
     callback()
   }, function (callback) {
     // 4. after last chunk
-    this.push(rdf.quad(rdf.blankNode(id), rdf.ns.rdf.type, ex.StepSummary))
-    this.push(rdf.quad(rdf.blankNode(id), ex.totalQuads, total))
+    this.push(env.quad(env.blankNode(id), env.ns.rdf.type, ex.StepSummary))
+    this.push(env.quad(env.blankNode(id), ex.totalQuads, total))
     callback()
   })
 }
@@ -116,11 +117,11 @@ import nanoid from 'nanoid'
  * @this {import('barnard59-core').Context}
  */
 export default function step() {
-  const { rdf } = this
+  const { env } = this
   
   // 1. prepare the step
   const id = nanoid()
-  const ex = rdf.namespace('http://example.org/')
+  const ex = env.namespace('http://example.org/')
   let total = 0
   
   return new Transform({
@@ -133,8 +134,8 @@ export default function step() {
     },
     flush (callback) {
       // 4. after last chunk
-      this.push(rdf.quad(rdf.blankNode(id), rdf.ns.rdf.type, ex.StepSummary))
-      this.push(rdf.quad(rdf.blankNode(id), ex.totalQuads, total))
+      this.push(env.quad(env.blankNode(id), env.ns.rdf.type, ex.StepSummary))
+      this.push(env.quad(env.blankNode(id), ex.totalQuads, total))
       callback()
     }
   })
@@ -153,12 +154,12 @@ import { Readable } from 'stream'
  * @this {import('barnard59-core').Context}
  */
 export default function step() {
-  const { rdf } = this
+  const { env } = this
   
   return new Readable({
     objectMode: true,
     read () {
-      this.push(rdf.quad(rdf.blankNode(), rdf.ns.rdf.type, rdf.ns.rdfs.Resource))
+      this.push(env.quad(env.blankNode(), env.ns.rdf.type, env.ns.rdfs.Resource))
       this.push(null)
     }
   })
