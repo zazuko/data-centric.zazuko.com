@@ -31,6 +31,16 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
+    page: '/docs/cubes/',
+    title: 'Cubes',
+    image: '/img/cube.png',
+    description: (
+      <>
+        Use cube.link Cube Schema to create and manage RDF data cubes
+      </>
+    ),
+  },
+  {
     page: '',
     title: 'More',
     image: 'https://cygri.github.io/rdf-logos/png/rdf-128.png',

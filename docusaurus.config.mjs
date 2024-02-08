@@ -84,6 +84,12 @@ const config = {
             label: 'Workflows',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'cubesSidebar',
+            position: 'left',
+            label: 'Cubes',
+          },
+          {
             href: 'https://github.com/zazuko',
             label: 'GitHub',
             position: 'right',
