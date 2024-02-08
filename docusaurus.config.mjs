@@ -134,9 +134,9 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Zazuko GmbH. Built with Docusaurus.`,
       },
       prism: {
-        theme: themes.jettwaveLight,
-        darkTheme: themes.jettwaveDark,
-        additionalLanguages: ['turtle'],
+        theme: themes.nightOwlLight,
+        darkTheme: themes.nightOwl,
+        additionalLanguages: ['turtle', 'sparql'],
       },
     }),
 };
