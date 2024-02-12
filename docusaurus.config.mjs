@@ -84,6 +84,12 @@ const config = {
             label: 'Workflows',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'cubesSidebar',
+            position: 'left',
+            label: 'Cubes',
+          },
+          {
             href: 'https://github.com/zazuko',
             label: 'GitHub',
             position: 'right',
@@ -128,9 +134,9 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Zazuko GmbH. Built with Docusaurus.`,
       },
       prism: {
-        theme: themes.jettwaveLight,
-        darkTheme: themes.jettwaveDark,
-        additionalLanguages: ['turtle'],
+        theme: themes.nightOwlLight,
+        darkTheme: themes.nightOwl,
+        additionalLanguages: ['turtle', 'sparql'],
       },
     }),
 };
