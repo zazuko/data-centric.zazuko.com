@@ -21,17 +21,21 @@ If you are not fluent with Node.js & NPM read more about how to [create a packag
 
 First, install the main barnard59 package which serves a CLI to run pipelines. We will use it later in this tutorial.
 
-<Tabs>
-  <TabItem value="npm" label="NPM" default>
+<Tabs groupId="nodePackageManager">
+  <TabItem value="npm" label="NPM">
 
+    ```sh
     npm init -y
     npm i --save barnard59
+    ```
 
   </TabItem>
   <TabItem value="yarn" label="Yarn">
 
+    ```sh
     yarn init -y
     yarn add barnard59
+    ```
 
   </TabItem>
 </Tabs>
@@ -56,15 +60,19 @@ Add `type: module` to the package.json to use ESM Modules
 
 Then, add necessary dependencies which provide the operations we will use in the pipeline:
 
-<Tabs>
-  <TabItem value="npm" label="NPM" default>
+<Tabs groupId="nodePackageManager">
+  <TabItem value="npm" label="NPM">
 
+    ```sh
     npm i --save barnard59-formats barnard59-http barnard59-base
+    ```
 
   </TabItem>
   <TabItem value="yarn" label="Yarn">
 
+    ```sh
     yarn add barnard59-formats barnard59-http barnard59-base
+    ```
 
   </TabItem>
 </Tabs>
@@ -180,7 +188,7 @@ Finally, the last step is to serialize an RDF stream.
 
 You are now ready to run the pipeline:
 
-```
+```sh
 npx barnard59 run pipeline/main.ttl --pipeline http://example.org/pipeline/tz
 ```
 
@@ -199,7 +207,7 @@ In the output, you should see a single triple
 To use a different timezone, you can provide an override for the variable declared in the pipeline definition from the
 command line.
 
-```
+```sh
 npx barnard59 run pipeline/main.ttl \
   --pipeline http://example.org/pipeline/tz \
   --variable TZ=America/New_York
