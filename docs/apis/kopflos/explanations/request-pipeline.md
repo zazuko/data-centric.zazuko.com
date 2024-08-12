@@ -51,6 +51,10 @@ It is used to load the requested resource's Core Representation.
 The Core Representation are the triples returned by the resource loader. Typically, that would be the result of a SPARQL `DESCRIBE` query or contents of resource's "own graph".
 :::
 
+:::warning
+By default, a loader which returns the resource's own graph is used.
+:::
+
 ## Authorization
 
 Not implemented yet.
