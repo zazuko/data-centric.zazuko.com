@@ -35,7 +35,7 @@ Kopflos handler is the main entry point for all incoming requests. It is respons
 
 ## Resource Shape Lookup
 
-Resource Shape Lookup executes SPARQL against the `default` query endpoint to find the shape targetting the requested resource.
+Resource Shape Lookup executes SPARQL against the `default` query endpoint to find the shape targeting the requested resource.
 
 :::tip
 See also: [How to Select which resources should be served by the API](../how-to/resource-shape.md)
