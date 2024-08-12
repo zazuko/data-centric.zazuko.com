@@ -65,7 +65,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 <foo>
   a ex:Foo ;
-  <foo#export> <foo/export> ; # will be served by the API
-  <foo#import> <foo/import> ; # will not be served by the API
+  <foo#export> <foo/export> ; # <foo/export> will be served by the API
+  <foo#import> <foo/import> ; # but <foo/import> will not
 .
 ```
