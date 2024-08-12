@@ -48,7 +48,7 @@ When the Resource Shape is found, a resource loader is selected based from `kopf
 It is used to load the requested resource's Core Representation.
 
 :::info
-The Core Representation are the triples returned by the resource loader. Typically, that would the result of a SPARQL `DESCRIBE` query or contents of resource's "own graph".
+The Core Representation are the triples returned by the resource loader. Typically, that would be the result of a SPARQL `DESCRIBE` query or contents of resource's "own graph".
 :::
 
 ## Authorization
