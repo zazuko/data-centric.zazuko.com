@@ -18,9 +18,9 @@ Incoming Request
                                │
                          4** ◀─┴─▶ Authorization
                                      │
-                               400 ◀─┴─▶ Validate payload
+                               400 ◀─┴─▶ Validation
                                            │
-                                 4**/5** ◀─┴─▶ Run handler
+                                 4**/5** ◀─┴─▶ (User handler)
                                                  │
                                                  └─▶ Reply
 ```
@@ -59,11 +59,11 @@ By default, a loader which returns the resource's own graph is used.
 
 Not implemented yet.
 
-## Validate payload
+## Validation
 
 Not implemented yet.
 
-## Run handler
+## User handler
 
 Finally, the handler is executed. If no handler is defined, and the request method is a GET, the resource's Core Representation is returned.
 
