@@ -23,5 +23,7 @@ interface KopflosConfig {
   }
   // Named graphs which contain the API description.
   apiGraphs: Array<NamedNode | string>
+  // Base path for resolving `code:link` imports
+  codeBase?: string
 }
 ```
