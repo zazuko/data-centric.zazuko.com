@@ -31,6 +31,16 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
+    page: '/docs/apis/',
+    title: 'APIs',
+    image: '/img/kopflos.png',
+    description: (
+      <>
+        Simply create APIs for your data-centric applications
+      </>
+    ),
+  },
+  {
     page: '/docs/cubes/',
     title: 'Cubes',
     image: '/img/cube.png',
