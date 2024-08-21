@@ -11,7 +11,7 @@ Kopflos recognizes two loaders out of the box. They are identified by their shor
 ### Own graph loader
 
 The "Own Graph" loader is the default.
-It loads the requested resource from the same graph where the request was made.
+It loads the named graph for the requested resource.
 For example,
 a request to `https://example.org/person/1` will load the entire named graph `https://example.org/person/1` as Core Representation.
 
