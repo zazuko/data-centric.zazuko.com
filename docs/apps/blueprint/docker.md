@@ -38,10 +38,12 @@ If you are using `neptune` as the full text search dialect, you will need to pro
 
 In case you are using a Trifid instance, which is deployed at `http://example.com`, that is configured over a Fuseki endpoint, you can use the following configuration:
 
-- `ENDPOINT_URL=http://example.com/query`
-- `SPARQL_CONSOLE_URL=http://example.com/sparql/#query`
-- `GRAPH_EXPLORER_URL=http://example.com/graph-explorer/?resource`
-- `FULL_TEXT_SEARCH_DIALECT=fuseki`
+```env
+ENDPOINT_URL=http://example.com/query
+SPARQL_CONSOLE_URL=http://example.com/sparql/#query
+GRAPH_EXPLORER_URL=http://example.com/graph-explorer/?resource
+FULL_TEXT_SEARCH_DIALECT=fuseki
+```
 
 ## Running the container
 
