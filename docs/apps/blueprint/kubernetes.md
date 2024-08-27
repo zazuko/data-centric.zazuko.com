@@ -31,11 +31,30 @@ You can take a look at the [Artifact Hub](https://artifacthub.io/packages/helm/z
 To get started, you can create a `values.yaml` file with the following content:
 
 ```yaml
-endpointUrl: http://example.com/query
-sparqlConsoleUrl: http://example.com/sparql/#query
-graphExplorerUrl: http://example.com/graph-explorer/?resource
+endpointUrl: https://ld.example.com/query
+sparqlConsoleUrl: https://ld.example.com/sparql/#query
+graphExplorerUrl: https://ld.example.com/graph-explorer/?resource
 fullTextSearchDialect: fuseki
 neptuneFtsEndpoint: ""
+
+# Ingress configuration
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    # kubernetes.io/ingress.class: nginx
+
+  # Make sure to configure the following fields if you enable the Ingress
+  hosts:
+    - host: blueprint.example.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: blueprint-example-com-tls
+      hosts:
+        - blueprint.example.com
 
 # Trifid configuration
 trifid:
@@ -43,7 +62,7 @@ trifid:
 
   # Information about the SPARQL endpoint
   sparql:
-    endpoint: "http://blueprint-fuseki:3030/query" # Feel free to change this to your own SPARQL endpoint
+    endpoint: "http://blueprint-fuseki:3030/ds/query" # Feel free to change this to your own SPARQL endpoint
     # Uncomment the following lines if you need to authenticate
     # username: ""
     # password: ""
@@ -54,24 +73,22 @@ trifid:
 
   # Ingress configuration
   ingress:
-    enabled: false
+    enabled: true
     className: ""
     annotations:
-      {}
+      kubernetes.io/tls-acme: "true"
       # kubernetes.io/ingress.class: nginx
-      # kubernetes.io/tls-acme: "true"
 
     # Make sure to configure the following fields if you enable the Ingress
     hosts:
-      []
-      # - host: trifid-example.local
-      #   paths:
-      #     - path: /
-      #       pathType: ImplementationSpecific
-    tls: []
-    #  - secretName: trifid-example-tls
-    #    hosts:
-    #      - trifid-example.local
+      - host: ld.example.com
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+      - secretName: ld-example-com-tls
+        hosts:
+          - ld.example.com
 
 # Fuseki configuration
 fuseki:
@@ -85,6 +102,18 @@ fuseki:
     enabled: true
     size: 10Gi
 ```
+
+It assumes that the Trifid instance will be deployed at `ld.example.com` and the Blueprint instance at `blueprint.example.com`.
+You can change these values to match your domain.
+
+The Fuseki endpoint is not exposed, that's why you can see that Trifid is configured to use `blueprint-fuseki:3030/ds/query` as the endpoint.
+Feel free to change this to your own SPARQL endpoint, if you want to use a different one.
+
+Make sure to update the different ingress configurations to match your domain and TLS configuration.
+Relevant keys are `ingress` and `trifid.ingress`.
+You can disable them by setting `enabled: false`, and then you can access the services using port-forwarding or by creating the ingresses manually.
+
+You might want to see for more configuration options by checking the [Artifact Hub](https://artifacthub.io/packages/helm/zazuko/blueprint#values) page.
 
 ### Install the chart
 
