@@ -41,6 +41,16 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
+    page: '/docs/apps/',
+    title: 'Applications',
+    image: '/img/gears.webp',
+    description: (
+      <>
+        Data-centric based applications
+      </>
+    )
+  },
+  {
     page: '',
     title: 'More',
     image: 'https://cygri.github.io/rdf-logos/png/rdf-128.png',
