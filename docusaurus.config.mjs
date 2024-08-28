@@ -90,6 +90,12 @@ const config = {
             label: 'Cubes',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'appsSidebar',
+            position: 'left',
+            label: 'Applications',
+          },
+          {
             href: 'https://github.com/zazuko',
             label: 'GitHub',
             position: 'right',
