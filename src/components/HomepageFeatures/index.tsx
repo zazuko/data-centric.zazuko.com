@@ -31,9 +31,19 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
-    page: "/docs/cubes/",
-    title: "Cubes",
-    image: "/img/cube.png",
+    page: '/docs/apis/',
+    title: 'APIs',
+    image: '/img/kopflos.png',
+    description: (
+      <>
+        Simply create APIs for your data-centric applications
+      </>
+    ),
+  },
+  {
+    page: '/docs/cubes/',
+    title: 'Cubes',
+    image: '/img/cube.png',
     description: (
       <>Use cube.link Cube Schema to create and manage RDF data cubes</>
     ),
