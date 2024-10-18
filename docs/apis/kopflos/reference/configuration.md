@@ -1,4 +1,4 @@
-# Kopflos configuration
+# Configuration
 
 Kopflos can be configured via a configuration file, which can be in various formats and locations. If not provided, it will try various default locations:
 
@@ -12,10 +12,9 @@ Kopflos can be configured via a configuration file, which can be in various form
 
 ```ts
 interface KopflosConfig {
-  // The host to listen on. Default is `0.0.0.0`.
-  host: string  
-  // The port to listen on. Default is `1429`.
-  port: number
+  mode?: 'development' | 'production'
+  // Base IRI for the API and all its resources
+  baseIri: string
   // SPARQL endpoints. `default` endpoint is required.
   sparql: {
     default: string | import('sparql-http-client/StreamClient.js').Options
@@ -25,5 +24,9 @@ interface KopflosConfig {
   apiGraphs: Array<NamedNode | string>
   // Base path for resolving `code:link` imports
   codeBase?: string
+  // Plugin configuration
+  plugins?: Record<string, unknown>
+  // Custom configuration variables
+  variables?: Record<string, unknown>
 }
 ```
