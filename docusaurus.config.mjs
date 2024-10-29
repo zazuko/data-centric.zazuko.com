@@ -148,7 +148,7 @@ const config = {
       prism: {
         theme: themes.nightOwlLight,
         darkTheme: themes.nightOwl,
-        additionalLanguages: ['turtle', 'sparql'],
+        additionalLanguages: ['turtle', 'sparql', 'json'],
       },
     }),
 };

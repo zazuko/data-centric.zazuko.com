@@ -14,7 +14,7 @@ const api = new Kopflos(config)
 await Kopflos.fromGraphs(api, 'http://example.com/api1', 'http://example.com/api2', 'http://example.com/shared')
 ```
 
-:::hint
+:::tip
 [RDF/JS NamedNode](https://rdf.js.org/data-model-spec/#namednode-interface) objects can be used as well.
 :::
 
