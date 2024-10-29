@@ -30,3 +30,63 @@ interface KopflosConfig {
   variables?: Record<string, unknown>
 }
 ```
+
+## Variables
+
+Variables can additionally be provided via CLI options, and they will override the configuration
+file.
+
+```json
+{
+  "variables": {
+    "foo": "foo",
+    "bar": "bar"
+  }
+}
+```
+
+```sh
+kopflos --variable bar=baz
+```
+
+The above will result in the following variables:
+
+```json
+{
+  "foo": "foo",
+  "bar": "baz"
+}
+```
+
+They can be accessed from the KopflosEnvironment. In handler, for example:
+
+```ts
+import {Handler} from 'kopflos'
+
+export default (): Handler => ({env}) => {
+  const {foo, bar} = env.kopflos.config.variables
+}
+```
+
+They can also be used to parametrise handlers
+
+```turtle
+<#WebPage>
+  a kl:ResourceShape ;
+  kl:handler
+    [
+      a kl:Handler ;
+      kl:method "GET" ;
+      code:implementedBy
+        [
+          a code:EcmaScriptModule ;
+          code:link <file:handler/foobar.js#default> ;
+          code:arguments
+            (
+              "${foo}"^^code:EcmaScriptTemplateLiteral
+              "${bar}"^^code:EcmaScriptTemplateLiteral
+            ) ;
+        ] ;
+    ] ;
+.
+```
