@@ -85,6 +85,12 @@ const config = {
           },
           {
             type: 'docSidebar',
+            sidebarId: 'apisSidebar',
+            position: 'left',
+            label: 'APIs',
+          },
+          {
+            type: 'docSidebar',
             sidebarId: 'cubesSidebar',
             position: 'left',
             label: 'Cubes',
@@ -142,7 +148,7 @@ const config = {
       prism: {
         theme: themes.nightOwlLight,
         darkTheme: themes.nightOwl,
-        additionalLanguages: ['turtle', 'sparql'],
+        additionalLanguages: ['turtle', 'sparql', 'json'],
       },
     }),
 };
