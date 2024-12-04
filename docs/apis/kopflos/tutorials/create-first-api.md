@@ -1,6 +1,6 @@
 # Create your first API
 
-This tutorial will walk you through the creation of a Kopflos API from scratch.
+This tutorial will walk you through the creation of a minimal Kopflos API from scratch.
 The API will serve GET requests for RDF instances of `schema:Person`
 found in the backing triplestore.
 
@@ -13,9 +13,8 @@ mkdir my-api && cd my-api
 ```
 
 ## The database
-Kopflos requires a database (a SPARQL endpoint) to hold the API
-description as well as the RDF resources to be served.
-We can create a local Oxigraph triplestore with docker compose.
+Kopflos requires a database (a SPARQL endpoint) for the RDF resources as well as for the API
+description. We can create a local Oxigraph triplestore with docker compose.
 
 Create a docker compose file:
 ```bash
@@ -43,8 +42,8 @@ docker compose up -d
 
 Opening http://localhost:7878/, you should see the database UI.
 
-# The node project
-
+## The node project
+Now we create the Kopflos API leveraging [node express](http://expressjs.com/).
 Initialize a new _nodejs_ project:
 
 ```bash
@@ -53,12 +52,36 @@ npm init -y
 
 Edit the file `package.json` created by the above command, adding the field `"type": "module"`.
 
-Now install `kopflos` and `express`:
+After installing `kopflos` and `express`:
 ```bash
 npm install kopflos express
 ```
 
-Create a Kopflos configuration file:
+your `package.json` file should look like:
+
+```js
+{
+  "name": "my-api",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.0.1",
+    "kopflos": "^0.1.1"
+  }
+}
+```
+
+## The configuration file
+
+Create a Kopflos [configuration file](../reference/configuration):
 ```bash
 touch kopflos.config.js
 ```
@@ -81,11 +104,11 @@ export default {
 }
 ```
 The configuration tells Kopflos about the SPARQL endpoint. It also
-specifies to look for RDF files in the `resources` directory,
-and to load such data at start-up into the triplestore.
+tells to look for RDF files in the `resources` directory,
+and to load such data at start-up into the triplestore (see [Seed database on app start](../how-to/seed-database.md)).
 Among such data, the API description is expected in a file named `api.ttl`. Let's create it.
 
-## Create the API description
+## The API description
 ```bash
 mkdir resources && touch resources/api.ttl
 ```
@@ -108,11 +131,12 @@ The content of `api.ttl` is:
 .
 ```
 The API description above ensures that instances of `schema:Person` are
-recognized as API resources, and their default representation is the contents of the named graph having the resource URI.
+recognized as API resources (see [Request Handlers](../reference/request-handlers)), 
+and their default representation is the contents of the named graph identified by the resource URI (see [Resource Loaders](../how-to/resource-loaders)).
 
 ## Add resource data
 In the `resources` folder we can also add resource data.
-Let's add a file for a person:
+Let's add a file for a person named Alice:
 ```bash
 mkdir resources/people && touch resources/people/p1.ttl
 ```
@@ -138,7 +162,7 @@ Opening http://localhost:1429/people/p1 you should get the RDF data for Alice.
 ## Additional data
 So far we have a single resource, which was added at start-up together with the API description.
 
-But we can add more data. Open the user interface for the triple store (http://localhost:7878/),
+But we can add more data. Open the user interface for the triplestore (http://localhost:7878/),
 set the write endpoint to `http://localhost:7878/update`
 and run the following SPARQL insert command:
 
