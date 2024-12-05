@@ -1,27 +1,28 @@
-# Create your first API
+# Create Your First API
 
-This tutorial will walk you through the creation of a minimal Kopflos API from scratch.
-The API will serve GET requests for RDF instances of `schema:Person`
-found in the backing triplestore.
+This tutorial will guide you through the process of creating a minimal Kopflos API from scratch. The API will handle GET requests for RDF instances of `schema:Person` stored in the backing triplestore.
 
-Besides _nodejs_, you will need also _docker_ for the creation of a local triplestore. 
+In addition to _Node.js_, you will need _Docker_ to set up a local triplestore.
 
-Let's start creating a new directory and moving inside it:
+
+## Setup
+
+First, create a new directory for your project and navigate into it:
 
 ```bash 
 mkdir my-api && cd my-api
 ```
 
-## The database
-Kopflos requires a database (a SPARQL endpoint) for the RDF resources as well as for the API
-description. We can create a local Oxigraph triplestore with docker compose.
+## Setting Up the Database
 
-Create a docker compose file:
+Kopflos requires a database (a SPARQL endpoint) to store RDF resources and the API description. We will use Docker Compose to create a local Oxigraph triplestore.
+
+Create a Docker Compose file:
 ```bash
 touch docker-compose.yaml
 ```
 
-and copy/paste the following content into it:
+Add the following content to `docker-compose.yaml`:
 
 ```yaml
 version: '2'
@@ -39,25 +40,26 @@ Start the database:
 ```bash
 docker compose up -d
 ```
+Once the database is running, open [http://localhost:7878](http://localhost:7878) to access the database UI.
 
-Opening http://localhost:7878/, you should see the database UI.
 
-## The node project
-Now we create the Kopflos API leveraging [node express](http://expressjs.com/).
-Initialize a new _nodejs_ project:
+## Creating the Node.js Project
+
+Next, we will create the Kopflos API using [Node.js](http://nodejs.org/) and [Express](http://expressjs.com/).
+
+Initialize a new Node.js project:
 
 ```bash
 npm init -y
 ```
 
-Edit the file `package.json` created by the above command, adding the field `"type": "module"`.
+Edit the file `package.json` created by the above command, and set the `"type"` field to `"module"` :
 
-After installing `kopflos` and `express`:
-```bash
-npm install kopflos express
+```json
+"type": "module"
 ```
 
-your `package.json` file should look like:
+Your `package.json` should now look something like this:
 
 ```js
 {
@@ -71,12 +73,13 @@ your `package.json` file should look like:
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^5.0.1",
-    "kopflos": "^0.1.1"
-  }
+  "license": "ISC"
 }
+```
+Install `kopflos` and `express`:
+
+```bash
+npm install kopflos express
 ```
 
 ## The configuration file
@@ -85,7 +88,7 @@ Create a Kopflos [configuration file](../reference/configuration):
 ```bash
 touch kopflos.config.js
 ```
-and copy/paste the following contents into it:
+Add the following content to `kopflos.config.js`:
 ```js
 export default {
   baseIri: 'http://localhost:1429',
@@ -103,17 +106,23 @@ export default {
   },
 }
 ```
-The configuration tells Kopflos about the SPARQL endpoint. It also
-tells to look for RDF files in the `resources` directory,
-and to load such data at start-up into the triplestore (see [Seed database on app start](../how-to/seed-database.md)).
-Among such data, the API description is expected in a file named `api.ttl`. Let's create it.
+This configuration tells Kopflos about the SPARQL endpoint and specifies that RDF files in the `resources` directory should be loaded into the triplestore at startup (see [Seed database on app start](../how-to/seed-database.md)). 
+
+If we create a file named `api.ttl` in the `resources` directory, Kopflos will load its contents at startup into the named graph `http://localhost:1429/api`, which is where the API description should be according to the value of `apiGraphs`.
+
+Let's create this file.
+
 
 ## The API description
+
+Create the `resources` directory and the `api.ttl` file:
+
 ```bash
 mkdir resources && touch resources/api.ttl
 ```
 
-The content of `api.ttl` is:
+Add the following content to `api.ttl`:
+
 ```turtle
 @prefix schema: <http://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -132,16 +141,16 @@ The content of `api.ttl` is:
 ```
 The API description above ensures that instances of `schema:Person` are
 recognized as API resources (see [Request Handlers](../reference/request-handlers)), 
-and their default representation is the contents of the named graph identified by the resource URI (see [Resource Loaders](../how-to/resource-loaders)).
+and their core representation is the contents of the named graph identified by the resource URI (see [Resource Loaders](../how-to/resource-loaders)).
 
 ## Add resource data
-In the `resources` folder we can also add resource data.
-Let's add a file for a person named Alice:
+In the `resources` folder we can add also resource data.
+Let's add a file for a person named Alice in a `people` subdirectory:
 ```bash
 mkdir resources/people && touch resources/people/p1.ttl
 ```
 
-with contents:
+Add the following content to `p1.ttl`:
 
 ```turtle
 @prefix schema: <http://schema.org/> .
@@ -151,18 +160,28 @@ with contents:
 ```
 
 ## Start it!
-Now you can start kopflos:
+You can finally start kopflos:
 
 ```bash
 npx kopflos serve
 ```
+You should see some log messages, the last one similar to:
+```
+Server running on 1429. API URL: http://localhost:1429 
+```
 
-Opening http://localhost:1429/people/p1 you should get the RDF data for Alice.
+Opening [http://localhost:1429/people/p1](http://localhost:1429/people/p1) you should see the RDF data for Alice.
+The response is serialized as JSON-LD. To request another format you can use `curl`
+with a proper accept header:
+
+```bash
+curl --header "Accept: text/turtle" http://localhost:1429/people/p1
+```
 
 ## Additional data
-So far we have a single resource, which was added at start-up together with the API description.
+So far we have a single resource, which was added at startup together with the API description.
 
-But we can add more data. Open the user interface for the triplestore (http://localhost:7878/),
+But we can add more data. Open the user interface for the triplestore (http://localhost:7878),
 set the write endpoint to `http://localhost:7878/update`
 and run the following SPARQL insert command:
 
@@ -178,6 +197,6 @@ INSERT DATA {
 }
 ```
 It's important to use the resource URI for the named graph, as well
-as an instance of `schema:Person` in that graph.
+as for the instance of `schema:Person` in that graph.
 
-Now open http://localhost:1429/people/p2 and you should get also Bob's data.
+Now open [http://localhost:1429/people/p2](http://localhost:1429/people/p2) and you should get also Bob's data.
