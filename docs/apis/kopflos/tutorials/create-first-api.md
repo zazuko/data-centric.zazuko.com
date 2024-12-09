@@ -45,7 +45,7 @@ Once the database is running, open [http://localhost:7878](http://localhost:7878
 
 ## Creating the Node.js Project
 
-Next, we will create the Kopflos API using [Node.js](http://nodejs.org/) and [Express](http://expressjs.com/).
+Next, we will create the Kopflos API using [Node.js](http://nodejs.org/).
 
 Initialize a new Node.js project:
 
@@ -76,10 +76,10 @@ Your `package.json` should now look something like this:
   "license": "ISC"
 }
 ```
-Install `kopflos` and `express`:
+Install `kopflos`:
 
 ```bash
-npm install kopflos express
+npm install kopflos
 ```
 
 ## The configuration file
@@ -170,7 +170,20 @@ You should see some log messages, the last one similar to:
 Server running on 1429. API URL: http://localhost:1429 
 ```
 
-Opening [http://localhost:1429/people/p1](http://localhost:1429/people/p1) you should see the RDF data for Alice.
+Opening [http://localhost:1429/people/p1](http://localhost:1429/people/p1) you should see the RDF data for Alice:
+
+```json
+[
+  {
+    "@id": "http://localhost:1429/people/p1",
+    "@type": "http://schema.org/Person"
+  },
+  {
+    "@id": "http://localhost:1429/people/p1",
+    "http://schema.org/name": "Alice"
+  }
+]
+```
 The response is serialized as JSON-LD. To request another format you can use `curl`
 with a proper accept header:
 
@@ -178,25 +191,4 @@ with a proper accept header:
 curl --header "Accept: text/turtle" http://localhost:1429/people/p1
 ```
 
-## Additional data
-So far we have a single resource, which was added at startup together with the API description.
-
-But we can add more data. Open the user interface for the triplestore (http://localhost:7878),
-set the write endpoint to `http://localhost:7878/update`
-and run the following SPARQL insert command:
-
-
-```sparql
-PREFIX schema: <http://schema.org/>
-
-INSERT DATA {
-  GRAPH <http://localhost:1429/people/p2> {
-  	<http://localhost:1429/people/p2> a schema:Person;
-    	schema:name "Bob"
-  }
-}
-```
-It's important to use the resource URI for the named graph, as well
-as for the instance of `schema:Person` in that graph.
-
-Now open [http://localhost:1429/people/p2](http://localhost:1429/people/p2) and you should get also Bob's data.
+Congratulations! You have successfully created your first Kopflos API. You can now handle GET requests for RDF instances of `schema:Person` stored in your triplestore. Happy coding!
