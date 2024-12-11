@@ -51,7 +51,7 @@ PREFIX kl: <https://kopflos.described.at/>
   sh:property
     [
       sh:path </api/schema/tags> ;
-      sh:handler
+      kl:handler
         [
           a kl:Handler ;
           kl:method "GET" ;
