@@ -52,7 +52,7 @@ PREFIX kl: <https://kopflos.described.at/>
 [
   a kl:Handler ;
   code:implementedBy [
-    a code:EcamScriptModule ;
+    a code:EcmaScriptModule ;
     code:link <file:handler/query.js#runQuery> ;
     code:arguments [
       arg:endpointName "wikidata" ;
