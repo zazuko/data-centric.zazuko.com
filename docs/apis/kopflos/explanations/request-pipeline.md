@@ -45,11 +45,7 @@ See also: [How to Select which resources should be served by the API](../how-to/
 
 When the Resource Shape is found, a resource loader is selected based from `kopflos:resourceLoader` property, going bottom-up from the Resource/Property Shape to the share `kopflos:Config` resource.
 
-It is used to load the requested resource's Core Representation.
-
-:::info
-The Core Representation are the triples returned by the resource loader. Typically, that would be the result of a SPARQL `DESCRIBE` query or contents of resource's "own graph".
-:::
+It is used to load the requested resource's [Core Representation](../reference/glossary.md#core-representation).
 
 :::warning
 By default, a loader which returns the resource's own graph is used.
@@ -65,6 +61,7 @@ Not implemented yet.
 
 ## User handler
 
-Finally, the handler is executed. If no handler is defined, and the request method is a GET, the resource's Core Representation is returned.
+Finally, the handler is executed. If no handler is defined, and the request method is a GET, 
+the resource's [Core Representation](../reference/glossary.md#core-representation) is returned.
 
 The result of the handler is forwarded back to the server library to be sent as a response.

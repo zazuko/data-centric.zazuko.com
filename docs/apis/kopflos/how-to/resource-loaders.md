@@ -102,7 +102,8 @@ In the example above:
 
 A loader is a function that takes the requested URI
 (in the form of a [NamedNode](https://rdf.js.org/data-model-spec/#namednode-interface))
-and returns a Core Representation as an [RDF/JS Stream](https://rdf.js.org/stream-spec/#stream-interface).
+and returns a [Core Representation](../reference/glossary.md#core-representation) 
+as an [RDF/JS Stream](https://rdf.js.org/stream-spec/#stream-interface).
 It also takes a second argument: the instance of Kopflos that is processing the request.
 
 For example, here is a loader which sends a request query to a Stardog database,
