@@ -43,7 +43,7 @@ See also: [How to Select which resources should be served by the API](../how-to/
 
 ## Resource Loader Lookup + Load Resource
 
-When the Resource Shape is found, a resource loader is selected based from `kopflos:resourceLoader` property, going bottom-up from the Resource/Property Shape to the share `kopflos:Config` resource.
+When the Resource Shape is found, a resource loader is selected based from `kopflos:resourceLoader` property, going bottom-up from the Resource/Property Shape to the shared `kopflos:Config` resource.
 
 It is used to load the requested resource's [Core Representation](../reference/glossary.md#core-representation).
 
