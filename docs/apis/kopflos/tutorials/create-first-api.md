@@ -17,18 +17,12 @@ mkdir my-api && cd my-api
 
 Kopflos requires a database (a SPARQL endpoint) to store RDF resources and the API description. We will use Docker Compose to create a local Oxigraph triplestore.
 
-Create a Docker Compose file:
-```bash
-touch docker-compose.yaml
-```
-
-Add the following content to `docker-compose.yaml`:
+Create a `docker-compose.yaml` file with the following content to:
 
 ```yaml
-version: '2'
 services:
   oxigraph:
-    image: ghcr.io/oxigraph/oxigraph:0.4.2
+    image: ghcr.io/oxigraph/oxigraph:latest
     user: root
     command: serve --location /data --bind 0.0.0.0:7878
     ports:
@@ -40,7 +34,7 @@ Start the database:
 ```bash
 docker compose up -d
 ```
-Once the database is running, open [http://localhost:7878](http://localhost:7878) to access the database UI.
+Once the database is running, you can open [http://localhost:7878](http://localhost:7878) to access the database UI.
 
 
 ## Creating the Node.js Project
@@ -84,11 +78,7 @@ npm install kopflos
 
 ## The configuration file
 
-Create a Kopflos [configuration file](../reference/configuration):
-```bash
-touch kopflos.config.js
-```
-Add the following content to `kopflos.config.js`:
+Create a Kopflos [configuration file](../reference/configuration) `kopflos.config.js` with the following content to `kopflos.config.js`:
 ```js
 export default {
   baseIri: 'http://localhost:1429',
@@ -115,13 +105,7 @@ Let's create this file.
 
 ## The API description
 
-Create the `resources` directory and the `api.ttl` file:
-
-```bash
-mkdir resources && touch resources/api.ttl
-```
-
-Add the following content to `api.ttl`:
+Create the `resources` directory and a `api.ttl` file within:
 
 ```turtle
 @prefix schema: <http://schema.org/> .
@@ -145,12 +129,7 @@ and their core representation is the contents of the named graph identified by t
 
 ## Add resource data
 In the `resources` folder we can add also resource data.
-Let's add a file for a person named Alice in a `people` subdirectory:
-```bash
-mkdir resources/people && touch resources/people/p1.ttl
-```
-
-Add the following content to `p1.ttl`:
+Let's add a file for a person named Alice in a `people` subdirectory. We'll call it `resources/people/p1.ttl`.
 
 ```turtle
 @prefix schema: <http://schema.org/> .
