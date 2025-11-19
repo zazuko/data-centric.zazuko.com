@@ -78,7 +78,31 @@ In case input subjects have a different structure, you may need to call `toObser
 
 ## Creating Cube Shapes
 
-`buildCubeShape` is another useful operation and you may want to add it right after  `toObservation` to derive SHACL shapes from actual data.
+`buildCubeShape` is another useful operation and you may want to add it right after  `toObservation` to derive SHACL shapes from actual data:
+
+```turtle #5
+@prefix rdf: <https://barnard59.zazuko.com/operations/rdf/> .
+@prefix p: <https://pipeline.described.at/> .
+@prefix base: <https://barnard59.zazuko.com/operations/base/> .
+@prefix cube: <https://barnard59.zazuko.com/operations/cube/> .
+@prefix ntriples: <https://barnard59.zazuko.com/operations/formats/ntriples/> .
+@prefix corefs: <https://barnard59.zazuko.com/operations/core/fs/> .
+@prefix splitDataset: <https://barnard59.zazuko.com/operations/rdf/splitDataset/> .
+
+<> a p:Pipeline ;
+  p:steps [ 
+    p:stepList (
+        [ rdf:open ("dataFile"^^p:VariableName) ]
+        [ splitDataset:bySubject () ]
+        [ cube:toObservation () ]
+        # highlight-next-line
+        [ cube:buildCubeShape () ] 
+        [ base:flatten () ]
+        [ ntriples:serialize ()]
+        [ corefs:createWriteStream ("outputFile"^^p:VariableName) ]
+    ) 
+  ].
+```
 
 It will append more triples to the output:
 
